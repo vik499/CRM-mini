@@ -1,0 +1,56 @@
+@media (max-width: 768px) {
+  .t-title {
+    font-size: 10px !important;
+    white-space: nowrap; /* Запрещаем перенос строки */
+  }
+
+  .edit-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .edit-btn svg {
+    margin-right: 5px;
+  }
+}
+
+@media (max-width: 320px) {
+  .input-search {
+    display: none; /* Скрываем поле поиска */
+  }
+
+  .logo {
+    margin: 0 auto; /* Центрируем логотип */
+  }
+
+  .t-title {
+    font-size: 12px !important;
+    white-space: nowrap; /* Запрещаем перенос строки */
+  }
+
+  .header-container {
+    width: 100vw; /* Растягиваем на всю ширину экрана */
+    max-width: 100%; /* Ограничиваем максимальную ширину */
+  }
+
+  .edit-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .edit-btn svg {
+    margin-right: 5px;
+  }
+}
+
+
+@media (max-width: 600px) {
+  .add-client-btn {
+    width: 90%;
+    max-width: 300px;
+    margin: 0 auto;
+    font-size: 16px;
+  }
+}

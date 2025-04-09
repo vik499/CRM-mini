@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MINI-crm "Система управления контактами"</title>
+    <!-- Подключение Bootstrap для оформления и адаптивности интерфейса -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <!-- Ваши стили -->
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/media.css" />
+    <!-- Подключение JS (точка входа) -->
+    <script defer type="module" src="./js/main.js"></script>
+  </head>
+  <body>
+    <!-- Шапка сайта: содержит логотип и поле для поиска -->
+    <header class="header-container p-3">
+      <div class="container d-flex align-items-center header-container__margin">
+        <!-- Блок с логотипом приложения -->
+        <div class="logo" id="logo">
+          <span class="logo-text" id="logo-text"> MINI-crm</span>
+        </div>
+        <!-- Поле ввода для осуществления поиска по контактам -->
+        <input
+          type="text"
+          id="search-input"
+          class="input-search form-control w-25"
+          placeholder="Введите запрос"
+        />
+      </div>
+    </header>
+
+    <!-- Основной раздел страницы, где располагается контент приложения -->
+    <main class="main-container">
+      <div class="container py-5">
+        <!-- Контейнер, в котором находится таблица с информацией о клиентах -->
+        <div class="table-container">
+          <!-- Элемент-индикатор загрузки (спиннер), который показывается во время ожидания данных -->
+          <div id="loading-spinner" class="loading-spinner"></div>
+          <!-- Заголовок, информирующий пользователя о том, что ниже отображаются клиенты -->
+          <h1 class="title">Клиенты</h1>
+          <!-- Таблица для отображения списка клиентов с возможностью сортировки -->
+          <table class="table">
+            <thead class="table-head">
+              <!-- Изменено: убраны дублирующие текстовые значения внутри th -->
+              <th 
+                class="t-title sortable id-header"
+                data-sort-key="id"
+                data-original-text="ID"
+              ></th>
+              <th 
+                class="t-title sortable"
+                data-sort-key="fullName"
+                data-original-text="Фамилия Имя Отчество"
+              ></th>
+              <th 
+                class="t-title sortable"
+                data-sort-key="createdAt"
+                data-original-text="Дата и время создания"
+              ></th>
+              <th 
+                class="t-title sortable"
+                data-sort-key="updatedAt"
+                data-original-text="Последние изменения"
+              ></th>
+              <!-- У этих двух уже были data-original-text -->
+              <th class="t-title" data-original-text="Контакты">Контакты</th>
+              <th class="t-title" data-original-text="Действия">Действия</th>
+            </thead>
+            <!-- Тело таблицы, в которое динамически будут подставляться строки с данными клиентов через JavaScript -->
+            <tbody id="clients-table-body" class="clients-table-body-container">
+              <!-- Здесь JavaScript добавит строки с данными о клиентах -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Шаблон для одной строки таблицы клиента -->
+        <template id="client-row-template">
+          <tr>
+            <td class="align-middle table-item data-cell client-id"></td>
+            <td class="align-middle table-item data-cell client-name"></td>
+            <td class="align-middle table-item data-cell client-createdAt"></td>
+            <td class="align-middle table-item data-cell client-updatedAt"></td>
+            <td class="align-middle table-item data-cell client-contacts"></td>
+            <td class="align-middle table-item btn-cell">
+              <!-- Кнопка для редактирования информации о клиенте -->
+              <button class="btn edit-btn" data-id="">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 9.49996V12H2.5L9.87333 4.62662L7.37333 2.12662L0 9.49996ZM11.8067 2.69329C12.0667 2.43329 12.0667 2.01329 11.8067 1.75329L10.2467 0.193291C9.98667 -0.066709 9.56667 -0.066709 9.30667 0.193291L8.08667 1.41329L10.5867 3.91329L11.8067 2.69329Z"
+                    fill="#9873FF"
+                  />
+                </svg>
+                Изменить
+              </button>
+              <!-- Кнопка для удаления клиента из системы -->
+              <button class="btn delete-btn" data-id="">
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M6 0C2.682 0 0 2.682 0 6C0 9.318 2.682 12 6 12C9.318 12 12 9.318 12 6C12 2.682 9.318 0 6 0ZM6 10.8C3.354 10.8 1.2 8.646 1.2 6C1.2 3.354 3.354 1.2 6 1.2C8.646 1.2 10.8 3.354 10.8 6C10.8 8.646 8.646 10.8 6 10.8ZM8.154 3L6 5.154L3.846 3L3 3.846L5.154 6L3 8.154L3.846 9L6 6.846L8.154 9L9 8.154L6.846 6L9 3.846L8.154 3Z"
+                    fill="#F06A4D"
+                  />
+                </svg>
+                Удалить
+              </button>
+            </td>
+          </tr>
+        </template>
+
+        <!-- Кнопка "Добавить клиента" -->
+        <div class="button-container text-center">
+          <button id="add-client-btn" class="add-client-btn">
+            <div class="flex">
+              <svg
+                class="add-client-btn__svg"
+                width="23"
+                height="16"
+                viewBox="0 0 23 16"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M14.5 8C16.71 8 18.5 6.21 18.5 4C18.5 1.79 16.71 0 14.5 0C12.29 0 10.5 1.79 10.5 4C10.5 6.21 12.29 8 14.5 8ZM5.5 6V3H3.5V6H0.5V8H3.5V11H5.5V8H8.5V6H5.5ZM14.5 10C11.83 10 6.5 11.34 6.5 14V16H22.5V14C22.5 11.34 17.17 10 14.5 10Z"
+                  fill="#9873FF"
+                />
+              </svg>
+            </div>
+            Добавить клиента
+          </button>
+        </div>
+
+        <!-- Модальное окно для добавления/редактирования клиента -->
+        <div id="client-modal" class="modal">
+          <div class="modal-content">
+            <!-- Кнопка закрытия (крестик) -->
+            <span id="modal-close" class="close"></span>
+            <h2 class="title-modal" id="form-title"></h2>
+            <form id="client-form">
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="client-surname"
+                  class="form-control"
+                  placeholder="Фамилия*"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="client-firstname"
+                  class="form-control"
+                  placeholder="Имя*"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  id="client-patronymic"
+                  class="form-control"
+                  placeholder="Отчество"
+                />
+              </div>
+              <div id="contacts-container" class="contacts-container">
+                <!-- JS вставляет кнопку "Добавить контакт" и список контактов -->
+              </div>
+              <div class="modal-buttons">
+                <button
+                  type="submit"
+                  id="save-client-btn"
+                  class="save-client-btn"
+                >
+                  Сохранить
+                </button>
+                <button
+                  type="button"
+                  id="delete-client-btn"
+                  class="delete-client-btn"
+                >
+                  Удалить клиента
+                </button>
+                <button type="button" id="cancel-btn" class="cancel-btn">
+                  Отмена
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Шаблон для строки одного контакта -->
+        <template id="contact-row-template">
+          <div class="contact-row">
+            <div class="custom-select">
+              <select class="contact-type">
+                <option value="phone">Телефон</option>
+                <option value="email">Email</option>
+                <option value="vk">VK</option>
+                <option value="fb">FB</option>
+                <option value="other">Другое</option>
+              </select>
+              <svg
+                class="select-icon"
+                width="12"
+                height="12"
+                viewBox="0 0 12 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_121_1693)">
+                  <path
+                    d="M1.495 3.69003C1.25 3.93503 1.25 4.33003 1.495 4.57503L5.65 8.73003C5.845 8.92503 6.16 8.92503 6.355 8.73003L10.51 4.57503C10.755 4.33003 10.755 3.93503 10.51 3.69003C10.265 3.44503 9.87 3.44503 9.625 3.69003L6 7.31003L2.375 3.68503C2.135 3.44503 1.735 3.44503 1.495 3.69003Z"
+                    fill="#9873FF"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_121_1693">
+                    <rect
+                      width="12"
+                      height="12"
+                      fill="white"
+                      transform="translate(0 12) rotate(-90)"
+                    />
+                  </clipPath>
+                </defs>
+              </svg>
+            </div>
+            <input
+              type="text"
+              class="contact-value"
+              placeholder="Введите данные контакта"
+            />
+            <button
+              type="button"
+              id="delete-contact-btn"
+              class="delete-contact-btn"
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g clip-path="url(#clip0_121_1083)">
+                  <path
+                    d="M8 2C4.682 2 2 4.682 2 8C2 11.318 4.682 14 8 14C11.318 14 14 11.318 14 8C14 4.682 11.318 2 8 2ZM8 12.8C5.354 12.8 3.2 10.646 3.2 8C3.2 5.354 5.354 3.2 8 3.2C10.646 3.2 12.8 5.354 12.8 8C12.8 10.646 10.646 12.8 8 12.8ZM10.154 5L8 7.154L5.846 5L5 5.846L7.154 8L5 10.154L5.846 11L8 8.846L10.154 11L11 10.154L8.846 8L11 5.846L10.154 5Z"
+                    fill="#B0B0B0"
+                  />
+                </g>
+                <defs>
+                  <clipPath id="clip0_121_1083">
+                    <rect width="16" height="16" fill="white" />
+                  </clipPath>
+                </defs>
+              </svg>
+            </button>
+          </div>
+        </template>
+
+        <!-- Модальное окно для подтверждения удаления клиента -->
+        <div id="delete-confirm-modal" class="modal">
+          <div class="modal-content">
+            <span id="delete-modal-close" class="close"></span>
+            <h2 class="confirm-delete-title">Удалить клиента</h2>
+            <p class="confirm-delete-text">
+              Вы действительно хотите удалить<br />
+              данного клиента?
+            </p>
+            <div class="modal-buttons">
+              <button
+                type="button"
+                id="confirm-delete-btn"
+                class="confirm-delete-btn"
+              >
+                Удалить
+              </button>
+              <button
+                type="button"
+                id="cancel-delete-btn"
+                class="cancel-delete-btn"
+              >
+                Отмена
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

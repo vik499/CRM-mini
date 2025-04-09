@@ -1,0 +1,595 @@
+:root {
+  --green: #34c759;
+  --orange: #e6b127;
+  --red: #f06a4d;
+  --firm: #9873ff;
+  --grey: #c8c5d1;
+  --txt-grey: #b0b0b0;
+  --black: #333;
+  --font-family: "Open Sans", sans-serif;
+}
+
+/* RESET CONTACT-ROW */
+.contact-row select,
+.contact-row input,
+.contact-row button {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  font-family: inherit;
+}
+
+body {
+  background-color: rgb(242, 243, 242);
+}
+
+.contact-icon {
+  text-decoration: none !important;
+}
+
+.table td,
+.table th {
+  border-right: none !important;
+}
+
+/* HEADER */
+.header-container {
+  background-color: #fff;
+  position: relative;
+  box-shadow: 10px 10px 15px rgba(195, 204, 207, 0.5);
+  width: 100vw; /* Растягиваем на всю ширину экрана */
+  max-width: 100%; /* Ограничиваем максимальную ширину */
+}
+
+/* .header-container__margin {
+  margin: 0;
+} */
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 50px;
+  border-radius: 50%;
+  background-color: var(--firm);
+  width: 50px;
+  height: 50px;
+  flex-shrink: 0; /* Запрещаем сужение логотипа */
+}
+
+.logo-text {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 10px;
+  color: #fff;
+}
+
+.input-search {
+  padding-left: 20px !important;
+  border: 1px solid var(--grey) !important;
+  border-radius: 0;
+  min-width: 200px; /* Устанавливаем минимальную ширину */
+}
+
+.input-search::placeholder {
+  color: var(--txt-grey);
+}
+
+/* MAIN */
+.t-title {
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--txt-grey) !important;
+  opacity: 0.8;
+}
+
+.title {
+  margin-bottom: 35px;
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--black);
+}
+
+.table-head th {
+  background-color: rgb(242, 243, 242);
+}
+
+.table-head {
+  position: relative;
+}
+
+.clients-table-body {
+  border: 0;
+}
+
+.add-client-btn {
+  justify-content: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgb(242, 243, 242);
+  border-radius: 0;
+  border: 1px solid var(--firm);
+  width: 216px;
+  height: 44px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  color: var(--firm);
+}
+
+.add-client-btn:hover {
+  background-color: var(--firm);
+  color: #fff;
+}
+
+.add-client-btn:active {
+  background-color: rgb(242, 243, 242);
+  color: var(--firm);
+}
+
+.add-client-btn:hover .add-client-btn__svg path {
+  fill: #fff;
+}
+
+.add-client-btn:active .add-client-btn__svg path {
+  fill: var(--firm);
+}
+
+.table {
+  margin-bottom: 25px;
+  position: relative; 
+}
+
+.table-container {
+  position: relative; 
+  overflow-x: auto; /* Добавляем горизонтальную прокрутку при необходимости */
+}
+
+.contact-list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+}
+
+/* CONTACTS-ICONS */
+.contact-icon.email {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url("/icons/email.svg") center/contain no-repeat;
+}
+
+.contact-icon.phone {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url("/icons/phone.svg") center/contain no-repeat;
+}
+
+.contact-icon.vk {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url("/icons/vk.svg") center/contain no-repeat;
+}
+
+.contact-icon.fb {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url("/icons/fb.svg") center/contain no-repeat;
+}
+
+.contact-icon.default {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: url("/icons/default.svg") center/contain no-repeat;
+}
+
+.contact-icon.more-contacts {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: var(--firm);
+  color: #fff;
+  text-align: center;
+  line-height: 16px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* СТИЛИ МОДАЛЬНОГО ОКНА */
+.contacts-container {
+  background-color: rgb(242, 243, 242);
+  /* opacity: 0.3; */
+  margin: 0 -50px;
+}
+
+.add-contact-btn {
+  all: unset;
+  position: relative;
+  padding-left: 26px; /* Оставляем место для иконки */
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-family: var(--font-family);
+font-weight: 600;
+font-size: 14px;
+color: var(--black);
+}
+
+.add-contact-btn::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  background: url("/icons/add-contacts-btn.svg") no-repeat center
+    center;
+  background-size: contain;
+}
+
+.add-contact-btn:active {
+  color: var(--firm);
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px 50px 20px 50px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 0;
+  position: relative;
+}
+
+.close {
+  color: #aaa;
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  width: 20px; /* Устанавливаем ширину */
+  height: 20px; /* Устанавливаем высоту */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.close::before {
+  content: "\00d7"; /* Символ крестика */
+  font-size: 30px; /* Размер символа */
+  line-height: 1; /* Высота строки */
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.modal-buttons {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  padding: 20px 50px 0 50px;
+}
+
+.contact-row select,
+.contact-row input {
+  flex: 1;
+}
+
+.delete-contact-btn {
+  background-color: #e7e5eb !important;
+  padding: 5px 5px 6px 5px !important;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-top: 1px solid var(--grey) !important;
+  border-bottom: 1px solid var(--grey) !important;
+  border-right: 1px solid var(--grey) !important;
+}
+
+.title-modal {
+  font-family: var(--font-family);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--black);
+  margin-bottom: 25px;
+}
+
+.save-client-btn {
+  all: unset;
+  background-color: var(--firm);
+  border-radius: 0;
+  border: 1px solid var(--firm);
+padding: 14px 45px;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+  color: #fff;
+}
+
+.save-client-btn:hover {
+  background-color: #8052ff;
+  transition: ease-in-out 0.6ms;
+}
+
+.save-client-btn:active {
+  background-color: var(--firm);
+  color: #fff;
+  transition: ease-in-out 0.6ms;
+}
+
+
+.delete-client-btn {
+  all: unset;
+  font-family: var(--font-family);
+font-weight: 400;
+font-size: 12px;
+text-decoration: underline;
+text-decoration-skip-ink: none;
+color: var (--black);
+}
+
+.cancel-btn {
+  all: unset;
+  font-family: var(--font-family);
+font-weight: 400;
+font-size: 12px;
+text-decoration: underline;
+text-decoration-skip-ink: none;
+color: var(--black);
+}
+
+.confirm-delete-btn {
+  all: unset;
+  padding: 12px 35px;
+  text-align: center;
+  background-color: var(--firm);
+  color: #fff;
+}
+
+.confirm-delete-btn:hover {
+  background-color: #8052ff;
+  color: #fff;
+}
+
+.confirm-delete-btn:active {
+  background-color: var(--firm);
+  color: #fff;
+}
+
+.cancel-delete-btn {
+  all: unset;
+  font-family: var (--font-family);
+font-weight: 400;
+font-size: 12px;
+text-decoration: underline;
+text-decoration-skip-ink: none;
+color: var (--black);
+}
+
+.form-group {
+  border-bottom: solid 1px var(--grey);
+}
+
+.form-control {
+  padding-left: 0;
+  border: none;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  /* color: var(--txt-grey) !important; */
+}
+
+.custom-select {
+  position: relative;
+}
+
+.custom-select select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: #e7e5eb;
+  border: 1px solid var(--grey);
+  width: 123px;
+  height: 37px;
+  padding-left: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.select-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.contact-type {
+  padding-left: 15px;
+}
+
+.contact-value {
+  background-color: rgb(242, 243, 242);
+  padding: 0;
+  /* max-width: 123px; */
+  height: 37px;
+  border: 1px solid var(--grey) !important;
+  padding-left: 12px !important;
+}
+
+.confirm-delete-title {
+  text-align: center;
+  font-family: var(--font-family);
+font-weight: 700;
+font-size: 18px;
+color: var(--black);
+}
+
+.confirm-delete-text {
+  text-align: center;
+  font-family: var(--font-family);
+font-weight: 400;
+font-size: 14px;
+text-align: center;
+color: var(--black);
+}
+
+.contact-icon {
+  position: relative;
+  cursor: pointer;
+  /* Дополнительные стили для иконки можно добавить здесь */
+}
+
+/* Псевдоэлемент для tooltip */
+.contact-icon::after {
+  all: unset;
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%; /* Располагаем над иконкой */
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-in-out;
+  font-size: 12px;
+  margin-bottom: 5px; /* Отступ между иконкой и подсказкой */
+}
+
+/* При наведении отображаем подсказку */
+.contact-icon:hover::after {
+  opacity: 1;
+}
+
+.id-header,
+.sort-text {
+  color: var(--firm) !important; 
+}
+
+.client-id {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  color: var (--txt-grey) !important;
+}
+
+.table-item {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--black);
+}
+
+.btn {
+  all: unset;
+  padding: 7px !important;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--black);
+}
+
+
+.client-id-display {
+  padding-left: 10px;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  color: var(--txt-grey);
+}
+
+.error-message {
+  color: red;
+  font-size: 0.8em;
+  text-align: center;
+}
+
+.edit-btn:active {
+  color: var(--firm) !important;
+  transition: ease-in-out;
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+  color: var(--firm) !important;
+}
+
+.loading-spinner {
+  display: none;
+  border: 8px solid #f3f3f3;
+  border-top: 8px solid var(--firm);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; 
+}
+
+.clients-table-body-container {
+  position: relative;
+}
+
+.hidden-contacts-icon {
+  display: flex;
+}
+
+#clients-table-body {
+  position: relative;
+  min-height: 200px; 
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
+
